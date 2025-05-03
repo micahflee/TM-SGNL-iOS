@@ -1,0 +1,19 @@
+Signal adalah aplikasi perpesanan yang mengutamakan privasi. Aplikasi ini gratis dan mudah digunakan, dengan enkripsi end-to-end yang kuat sehingga memastikan komunikasi Anda benar-benar privat.
+
+• Kirim teks, pesan suara, foto, video, GIF, dan file secara gratis. Signal menggunakan koneksi data ponsel, sehingga Anda terhindar dari biaya SMS dan MMS.
+
+• Panggil teman Anda dengan panggilan suara dan video terenkripsi yang memiliki kualitas sangat jernih. Panggilan grup didukung untuk maksimal 40 orang.
+
+• Tetap terhubung dengan obrolan grup yang maksimal beranggotakan 1.000 orang. Kontrol siapa yang dapat memposting dan mengelola anggota grup dengan pengaturan izin admin.
+
+• Bagikan Cerita gambar, teks, dan video yang otomatis hilang setelah 24 jam. Pengaturan privasi memungkinkan Anda mengontrol siapa saja yang bisa melihat setiap Cerita.
+
+• Signal dikembangkan untuk privasi Anda. Kami tidak tahu apa pun tentang Anda atau dengan siapa Anda berbicara. Protokol Signal sumber terbuka kami berarti bahwa kami tidak dapat membaca pesan atau mendengarkan panggilan Anda. Begitu pun orang lain. Tidak ada penyadapan tersembunyi, tidak ada pengumpulan data, tidak ada kompromi. 
+
+• Signal bersifat independen dan tidak mencari profit; jenis teknologi yang berbeda dari jenis organisasi yang unik. Sebagai organisasi nirlaba 501c3, kami didukung oleh donasi Anda, bukan oleh pengiklan atau investor. 
+
+• Untuk dukungan, pertanyaan, atau informasi lebih lanjut, silakan kunjungi https://support.signal.org/
+
+Untuk memeriksa kode sumber kami, kunjungi https://github.com/signalapp 
+
+Ikuti kami di Twitter @signalapp dan Instagram @signal_app

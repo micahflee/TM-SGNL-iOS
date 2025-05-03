@@ -1,0 +1,19 @@
+• Signal este o aplicație pentru mesaje care pune confidențialitatea pe primul loc. Este gratuit și ușor de folosit, cu criptare puternică integrală care păstrează comunicarea complet privată.
+
+• Trimite texte, mesaje vocale, fotografii, videoclipuri, GIF-uri și fișiere gratuite. Signal folosește conexiunea de date a telefonului tău, așadar evită taxele SMS și MMS.
+
+• Sună-ți prietenii cu apeluri vocale și video criptate, extrem de clare. Apelurile de grup acceptă până la 40 de persoane.
+
+• Rămâi conectat/ă la conversațiile de grup cu până la 1000 de persoane. Controlează cine poate posta și gestionează membrii de grup cu setările de permisiune de administrator.
+
+• Trimite Povești video, cu imagini și text care dispar după 24 de ore. Setările de confidențialitate te păstrează în control și poți stabili cine îți vede fiecare Poveste.
+
+• Signal este construit pentru confidențialitatea ta. Nu știm nimic despre tine sau despre persoanele cu care vorbești. Protocolul Signal cu surse deschise înseamnă că nu îți putem citi mesajele și nu îți putem asculta apelurile. Și nici altcineva nu poate face așa ceva. Nu există breșe, colectare de date sau compromisuri. 
+
+• Signal este o companie independentă și non-profit; un tip diferit de tehnologie pentru un tip diferit de organizație. Ca nonprofit de tip 501c3 suntem sprijiniți de donațiile tale, nu de publicitate sau investitori. 
+
+• Pentru asistență, întrebări sau informații suplimentare, intră pe: https://support.signal.org/
+
+Pentru a verifica codul nostru sursă, vizitează https://github.com/signalapp 
+
+Urmărește-ne pe Twitter @signalapp și Instagram @signal_app

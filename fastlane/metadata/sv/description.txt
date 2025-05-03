@@ -1,0 +1,19 @@
+• Signal är en meddelandeapp med integritet som kärnpunkt. Den är gratis och enkel att använda, med stark totalsträckskryptering som håller din kommunikation helt privat.
+
+• Skicka text- och röstmeddelanden, foton, videor, GIF- och andra filer gratis. Signal använder telefonens dataanslutning, så att du undviker sms- och mms-avgifter.
+
+• Ring dina vänner med kristallklara krypterade röst- och videosamtal. Gruppsamtal stöds för upp till 40 personer.
+
+• Håll kontakten med gruppchattar på upp till 1 000 personer. Styr vem som kan göra inlägg och hantera gruppmedlemmar med inställningar för administratörsbehörighet.
+
+• Dela bild-, text- och videostories som försvinner efter 24 timmar. Integritetsinställningar ger dig kontroll över exakt vem som kan se varje story.
+
+• Signal är byggd för din integritet. Vi vet ingenting om dig eller vem du pratar med. Vårt Signal Protocol med öppen källkod innebär att vi inte kan läsa dina meddelanden eller lyssna på dina samtal. Det kan ingen annan heller. Inga bakdörrar, ingen datainsamling, inga kompromisser. 
+
+• Signal är oberoende och inte vinstdrivande. En annan sorts teknik från en annan sorts organisation. Som ideell 501c3-organisation stöds vi av dina donationer, inte av annonsörer eller investerare. 
+
+• För support, frågor eller mer information besök https://support.signal.org/
+
+För att kolla in vår källkod, besök https://github.com/signalapp 
+
+Följ oss på Twitter @signalapp och Instagram @signal_app

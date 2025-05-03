@@ -1,0 +1,27 @@
+//
+// Copyright 2022 Signal Messenger, LLC
+// SPDX-License-Identifier: AGPL-3.0-only
+//
+
+import Foundation
+
+public extension SetAlgebra {
+    /// Returns `true` if `self` and `other` have any elements in common.
+    @inlinable
+    func intersects(_ other: Self) -> Bool {
+        !self.isDisjoint(with: other)
+    }
+
+    /// Inserts `element` into the set if `present` is `true`; otherwise removes it.
+    ///
+    /// Returns the equivalent element that was previously in the set, if there was one.
+    @discardableResult
+    @inlinable
+    mutating func update(_ element: Element, present: Bool) -> Element? {
+        if present {
+            return self.update(with: element)
+        } else {
+            return self.remove(element)
+        }
+    }
+}

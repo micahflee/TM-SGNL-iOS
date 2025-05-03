@@ -1,0 +1,352 @@
+//
+// Copyright 2017 Signal Messenger, LLC
+// SPDX-License-Identifier: AGPL-3.0-only
+//
+
+import SignalServiceKit
+import UIKit
+import YYImage
+
+class MediaMessageView: UIView, AudioPlayerDelegate {
+
+    private let attachment: SignalAttachment
+
+    private var audioPlayer: AudioPlayer?
+    private lazy var audioPlayButton = UIButton()
+
+    // MARK: Initializers
+
+    init(attachment: SignalAttachment, contentMode: UIView.ContentMode = .scaleAspectFit) {
+        assert(!attachment.hasError)
+        self.attachment = attachment
+
+        super.init(frame: CGRect.zero)
+
+        self.contentMode = contentMode
+        tintColor = .white
+
+        recreateViews()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override var contentMode: UIView.ContentMode {
+        get {
+            return super.contentMode
+        }
+        set {
+            switch newValue {
+            case .scaleAspectFit:
+                super.contentMode = .scaleAspectFit
+            case .scaleAspectFill:
+                super.contentMode = .scaleAspectFill
+            default:
+                owsFailDebug("Invalid content mode, only scale aspect fit and fill are supported")
+                super.contentMode = .scaleAspectFit
+            }
+            recreateViews()
+        }
+    }
+
+    // MARK: - Create Views
+
+    private func recreateViews() {
+        subviews.forEach { $0.removeFromSuperview() }
+
+        if attachment.isLoopingVideo {
+            createLoopingVideoPreview()
+        } else if attachment.isAnimatedImage {
+            createAnimatedPreview()
+        } else if attachment.isImage {
+            createImagePreview()
+        } else if attachment.isVideo {
+            createVideoPreview()
+        } else if attachment.isAudio {
+            createAudioPreview()
+        } else {
+            createGenericPreview()
+        }
+    }
+
+    private func wrapViewsInVerticalStack(subviews: [UIView]) -> UIView {
+        let stackView = UIStackView(arrangedSubviews: subviews)
+        stackView.spacing = 10
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.preservesSuperviewLayoutMargins = true
+        stackView.isLayoutMarginsRelativeArrangement = true
+        return stackView
+    }
+
+    private func createAudioPreview() {
+        guard let audioPlayer = AudioPlayer(attachment: attachment, audioBehavior: .playback) else {
+            createGenericPreview()
+            return
+        }
+
+        audioPlayer.delegate = self
+        self.audioPlayer = audioPlayer
+
+        var subviews = [UIView]()
+
+        setAudioIconToPlay()
+        audioPlayButton.addTarget(self, action: #selector(audioPlayButtonPressed), for: .touchUpInside)
+        let buttonSize = createHeroViewSize
+        audioPlayButton.autoSetDimension(.width, toSize: buttonSize)
+        audioPlayButton.autoSetDimension(.height, toSize: buttonSize)
+        subviews.append(audioPlayButton)
+
+        let fileNameLabel = createFileNameLabel()
+        if let fileNameLabel = fileNameLabel {
+            subviews.append(fileNameLabel)
+        }
+
+        let fileSizeLabel = createFileSizeLabel()
+        subviews.append(fileSizeLabel)
+
+        let stackView = wrapViewsInVerticalStack(subviews: subviews)
+        addSubview(stackView)
+
+        stackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        stackView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        stackView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor).isActive = true
+        stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor).isActive = true
+    }
+
+    private func createLoopingVideoPreview() {
+        guard
+            let video = LoopingVideo(attachment),
+            let previewImage = attachment.videoPreview()
+        else {
+            createGenericPreview()
+            return
+        }
+
+        let loopingVideoView = LoopingVideoView()
+        loopingVideoView.video = video
+        if contentMode == .scaleAspectFill {
+            addSubviewWithScaleAspectFillLayout(view: loopingVideoView, aspectRatio: previewImage.size.aspectRatio)
+        } else {
+            addSubviewWithScaleAspectFitLayout(view: loopingVideoView, aspectRatio: previewImage.size.aspectRatio)
+        }
+    }
+
+    private func createAnimatedPreview() {
+        guard attachment.isValidImage,
+              let dataUrl = attachment.dataUrl,
+              let image = YYImage(contentsOfFile: dataUrl.path),
+              image.size.width > 0 && image.size.height > 0 else {
+            createGenericPreview()
+            return
+        }
+
+        let animatedImageView = YYAnimatedImageView()
+        animatedImageView.image = image
+        let aspectRatio = image.size.width / image.size.height
+
+        if contentMode == .scaleAspectFill {
+            addSubviewWithScaleAspectFillLayout(view: animatedImageView, aspectRatio: aspectRatio)
+        } else {
+            addSubviewWithScaleAspectFitLayout(view: animatedImageView, aspectRatio: aspectRatio)
+        }
+    }
+
+    private func addSubviewWithScaleAspectFitLayout(view: UIView, aspectRatio: CGFloat) {
+        addSubview(view)
+
+        // This emulates the behavior of contentMode = .scaleAspectFit using iOS auto layout constraints.
+        view.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        view.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        view.autoPin(toAspectRatio: aspectRatio)
+        view.autoMatch(.width, to: .width, of: self, withMultiplier: 1.0, relation: .lessThanOrEqual)
+        view.autoMatch(.height, to: .height, of: self, withMultiplier: 1.0, relation: .lessThanOrEqual)
+    }
+
+    private func addSubviewWithScaleAspectFillLayout(view: UIView, aspectRatio: CGFloat) {
+        addSubview(view)
+
+        // This emulates the behavior of contentMode = .scaleAspectFill using iOS auto layout constraints.
+        view.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        view.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        view.autoPin(toAspectRatio: aspectRatio)
+        view.autoMatch(.height, to: .height, of: self, withMultiplier: 1.0, relation: .greaterThanOrEqual)
+        view.autoMatch(.width, to: .width, of: self, withMultiplier: 1.0, relation: .greaterThanOrEqual)
+        view.autoMatch(.width, to: .height, of: self, withMultiplier: aspectRatio, relation: .lessThanOrEqual)
+        view.autoMatch(.height, to: .width, of: self, withMultiplier: 1 / aspectRatio, relation: .lessThanOrEqual)
+    }
+
+    private func createImagePreview() {
+        guard attachment.isValidImage,
+              let image = attachment.image(),
+              image.size.width > 0 && image.size.height > 0 else {
+            createGenericPreview()
+            return
+        }
+
+        let imageView = UIImageView(image: image)
+        imageView.layer.minificationFilter = .trilinear
+        imageView.layer.magnificationFilter = .trilinear
+        let aspectRatio = image.size.width / image.size.height
+        if contentMode == .scaleAspectFill {
+            addSubviewWithScaleAspectFillLayout(view: imageView, aspectRatio: aspectRatio)
+        } else {
+            addSubviewWithScaleAspectFitLayout(view: imageView, aspectRatio: aspectRatio)
+        }
+    }
+
+    private func createVideoPreview() {
+        guard attachment.isValidVideo,
+              let image = attachment.videoPreview(),
+              image.size.width > 0 && image.size.height > 0 else {
+            createGenericPreview()
+            return
+        }
+
+        let imageView = UIImageView(image: image)
+        imageView.layer.minificationFilter = .trilinear
+        imageView.layer.magnificationFilter = .trilinear
+        let aspectRatio = image.size.width / image.size.height
+
+        if contentMode == .scaleAspectFill {
+            addSubviewWithScaleAspectFillLayout(view: imageView, aspectRatio: aspectRatio)
+        } else {
+            addSubviewWithScaleAspectFitLayout(view: imageView, aspectRatio: aspectRatio)
+        }
+    }
+
+    private func createGenericPreview() {
+        var subviews = [UIView]()
+
+        let imageView = createHeroImageView(imageName: "file-display")
+        subviews.append(imageView)
+
+        let fileNameLabel = createFileNameLabel()
+        if let fileNameLabel = fileNameLabel {
+            subviews.append(fileNameLabel)
+        }
+
+        let fileSizeLabel = createFileSizeLabel()
+        subviews.append(fileSizeLabel)
+
+        let stackView = wrapViewsInVerticalStack(subviews: subviews)
+        addSubview(stackView)
+
+        stackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        stackView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        stackView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor).isActive = true
+        stackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor).isActive = true
+    }
+
+    private var createHeroViewSize: CGFloat {
+        .scaleFromIPhone5(100)
+    }
+
+    private func createHeroImageView(imageName: String) -> UIView {
+        let imageSize = createHeroViewSize
+
+        let imageView = UIImageView(image: UIImage(named: imageName))
+        imageView.layer.shadowColor = UIColor.black.cgColor
+        let shadowScaling: CGFloat = 5.0
+        imageView.layer.shadowRadius = CGFloat(2.0 * shadowScaling)
+        imageView.layer.shadowOpacity = 0.25
+        imageView.layer.shadowOffset = CGSize(square: 0.75 * shadowScaling)
+        imageView.autoSetDimension(.width, toSize: imageSize)
+        imageView.autoSetDimension(.height, toSize: imageSize)
+
+        return imageView
+    }
+
+    private var labelFont: UIFont {
+        UIFont.regularFont(ofSize: .scaleFromIPhone5To7Plus(18, 24))
+    }
+
+    private func formattedFileExtension() -> String? {
+        guard let fileExtension = attachment.fileExtension else {
+            return nil
+        }
+
+        return String(format: OWSLocalizedString("ATTACHMENT_APPROVAL_FILE_EXTENSION_FORMAT",
+                                               comment: "Format string for file extension label in call interstitial view"),
+                      fileExtension.uppercased())
+    }
+
+    private func formattedFileName() -> String? {
+        guard let sourceFilename = attachment.sourceFilename else {
+            return nil
+        }
+        let filename = sourceFilename.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        guard !filename.isEmpty else {
+            return nil
+        }
+        return filename
+    }
+
+    private func createFileNameLabel() -> UIView? {
+        guard let filename = formattedFileName() ?? formattedFileExtension() else {
+            return nil
+        }
+
+        let label = UILabel()
+        label.text = filename
+        label.textColor = tintColor
+        label.font = labelFont
+        label.textAlignment = .center
+        label.lineBreakMode = .byTruncatingMiddle
+        return label
+    }
+
+    private func createFileSizeLabel() -> UIView {
+        let label = UILabel()
+        let fileSize = attachment.dataLength
+        label.text = String(format: OWSLocalizedString("ATTACHMENT_APPROVAL_FILE_SIZE_FORMAT",
+                                                     comment: "Format string for file size label in call interstitial view. Embeds: {{file size as 'N mb' or 'N kb'}}."),
+                            OWSFormat.localizedFileSizeString(from: Int64(fileSize)))
+
+        label.textColor = tintColor
+        label.font = labelFont
+        label.textAlignment = .center
+        return label
+    }
+
+    // MARK: - Event Handlers
+
+    @objc
+    private func audioPlayButtonPressed(sender: UIButton) {
+        audioPlayer?.togglePlayState()
+    }
+
+    // MARK: - OWSAudioPlayerDelegate
+
+    var audioPlaybackState = AudioPlaybackState.stopped {
+        didSet {
+            AssertIsOnMainThread()
+
+            ensureButtonState()
+        }
+    }
+
+    func setAudioProgress(_ progress: TimeInterval, duration: TimeInterval, playbackRate: Float) { }
+
+    func audioPlayerDidFinish() { }
+
+    private func ensureButtonState() {
+        if audioPlaybackState == .playing {
+            setAudioIconToPause()
+        } else {
+            setAudioIconToPlay()
+        }
+    }
+
+    private func setAudioIconToPlay() {
+        audioPlayButton.setImage(UIImage(named: "play-circle-display"), for: .normal)
+    }
+
+    private func setAudioIconToPause() {
+        audioPlayButton.setImage(UIImage(named: "pause-circle-display"), for: .normal)
+    }
+}

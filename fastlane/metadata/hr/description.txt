@@ -1,0 +1,19 @@
+Signal je aplikacija za razmjenu poruka u kojoj je privatnost na prvom mjestu. Besplatna i jednostavna za korištenje, u potpunosti štiti privatnost vaših razgovora snažnim sveobuhvatnim šifriranjem.
+
+• Besplatno šaljite tekstualne i glasovne poruke, fotografije, videozapise, GIF-ove i datoteke. Signal koristi podatkovnu vezu vašeg mobilnog uređaja kako biste izbjegli SMS i MMS naknade.
+
+• Uputite šifrirane glasovne pozive i videopozive vrhunske kvalitete svojim prijateljima. Grupni pozivi podržavaju do 40 sudionika.
+
+• Ostanite povezani uz grupne razgovore za do 1000 osoba. Kontrolirajte tko može objavljivati i upravljati članovima grupe u postavkama dopuštenja administratora.
+
+• Dijelite fotografije, tekst i videozapise putem priča koje nestaju nakon 24 sata. Postavke privatnosti omogućuju vam da točno odredite tko može vidjeti svaku vašu priču.
+
+• Signal je stvoren za vašu privatnost. Ne znamo ništa o vama ni o ljudima s kojima pričate. Naš Signal Protocol otvorenog koda znači da ne možemo čitati vaše poruke niti slušati vaše pozive. A ne može ni nitko drugi. Bez sporednih ulaza, bez prikupljanja podataka, bez kompromisa. 
+
+• Signal je neovisan i nije stvoren radi zarade; ovo je drugačija vrsta tehnologije iz drugačije vrste organizacije. Kao neprofitnu organizaciju tipa 501c3 podržavaju nas vaše donacije, a ne oglašivači ili investitori. 
+
+• Za podršku, pitanja ili više informacija posjetite https://support.signal.org/
+
+Za provjeru našeg izvornog koda, posjetite https://github.com/signalapp 
+
+Pratite nas na Twitteru @signalapp i Instagramu @signal_app

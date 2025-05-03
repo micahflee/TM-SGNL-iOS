@@ -1,0 +1,9 @@
+NSAppleMusicUsageDescription = "Signal需要使用Apple Music播放媒體附檔。";
+NSCameraUsageDescription = "Signal使用你的相機拍照和進行視訊通話。";
+NSContactsUsageDescription = "Signal使用你的聯絡人搜尋你認識的聯絡人。 我們不會將你的聯絡人儲存在伺服器上。";
+NSFaceIDUsageDescription = "Signal 的螢幕鎖定使用 Face ID。";
+NSLocationWhenInUseUsageDescription = "Signal需要連結你的位置才能分享你的當前位置。";
+NSMicrophoneUsageDescription = "Signal需要使用你的麥克風才能撥打和接聽電話並記錄語音訊息。";
+NSPhotoLibraryAddUsageDescription = "Signal會將照片儲存到你的照片庫。";
+NSPhotoLibraryUsageDescription = "Signal可以讓你從圖庫中選擇要傳送的照片。";
+NSLocalNetworkUsageDescription = "Signal使用本地網路允許你直接將帳戶轉移到新手機。 除非你明確選擇啟動轉移到新裝置，否則它將無法使用。";

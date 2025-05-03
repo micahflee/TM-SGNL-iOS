@@ -1,0 +1,280 @@
+//
+// Copyright 2020 Signal Messenger, LLC
+// SPDX-License-Identifier: AGPL-3.0-only
+//
+
+import MultipeerConnectivity
+import SignalServiceKit
+
+extension DeviceTransferService {
+    func buildManifest() throws -> DeviceTransferProtoManifest {
+        var manifestBuilder = DeviceTransferProtoManifest.builder(grdbSchemaVersion: UInt64(GRDBSchemaMigrator.grdbSchemaVersionLatest))
+        var estimatedTotalSize: UInt64 = 0
+
+        // Database
+
+        do {
+            let database: DeviceTransferProtoFile = try {
+                let file = SSKEnvironment.shared.databaseStorageRef.grdbStorage.databaseFilePath
+                guard let size = OWSFileSystem.fileSize(ofPath: file), size.uint64Value > 0 else {
+                    throw OWSAssertionError("Failed to calculate size of database \(file)")
+                }
+                estimatedTotalSize += size.uint64Value
+                let fileBuilder = DeviceTransferProtoFile.builder(
+                    identifier: DeviceTransferService.databaseIdentifier,
+                    relativePath: try pathRelativeToAppSharedDirectory(file),
+                    estimatedSize: size.uint64Value
+                )
+                return fileBuilder.buildInfallibly()
+            }()
+
+            let wal: DeviceTransferProtoFile = try {
+                let file = SSKEnvironment.shared.databaseStorageRef.grdbStorage.databaseWALFilePath
+                guard let size = OWSFileSystem.fileSize(ofPath: file), size.uint64Value > 0 else {
+                    throw OWSAssertionError("Failed to calculate size of database wal \(file)")
+                }
+                estimatedTotalSize += size.uint64Value
+                let fileBuilder = DeviceTransferProtoFile.builder(
+                    identifier: DeviceTransferService.databaseWALIdentifier,
+                    relativePath: try pathRelativeToAppSharedDirectory(file),
+                    estimatedSize: size.uint64Value
+                )
+                return fileBuilder.buildInfallibly()
+            }()
+
+            let databaseBuilder = DeviceTransferProtoDatabase.builder(
+                key: try SSKEnvironment.shared.databaseStorageRef.keyFetcher.fetchData(),
+                database: database,
+                wal: wal
+            )
+            manifestBuilder.setDatabase(databaseBuilder.buildInfallibly())
+        }
+
+        // Attachments, Avatars, and Stickers
+
+        // TODO: Ideally, these paths would reference constants...
+        let foldersToTransfer = ["ProfileAvatars/", "GroupAvatars/", "StickerManager/", "Wallpapers/", "Library/Sounds/", "AvatarHistory/", "attachment_files/"]
+        let filesToTransfer = try foldersToTransfer.flatMap { folder -> [String] in
+            let url = URL(fileURLWithPath: folder, relativeTo: DeviceTransferService.appSharedDataDirectory)
+            return try OWSFileSystem.recursiveFilesInDirectory(url.path)
+        }
+
+        for file in filesToTransfer {
+            guard let size = OWSFileSystem.fileSize(ofPath: file) else {
+                throw OWSAssertionError("Failed to calculate size of file \(file)")
+            }
+
+            guard size.uint64Value > 0 else {
+                owsFailDebug("skipping empty file \(file)")
+                continue
+            }
+
+            estimatedTotalSize += size.uint64Value
+            let fileBuilder = DeviceTransferProtoFile.builder(
+                identifier: UUID().uuidString,
+                relativePath: try pathRelativeToAppSharedDirectory(file),
+                estimatedSize: size.uint64Value
+            )
+            manifestBuilder.addFiles(fileBuilder.buildInfallibly())
+        }
+
+        // Standard Defaults
+        func isAppleKey(_ key: String) -> Bool {
+            return key.starts(with: "NS") || key.starts(with: "Apple")
+        }
+
+        do {
+            for (key, value) in UserDefaults.standard.dictionaryRepresentation() {
+                // Filter out any keys we think are managed by Apple, we don't need to transfer them.
+                guard !isAppleKey(key) else { continue }
+
+                guard let encodedValue = try? NSKeyedArchiver.archivedData(withRootObject: value, requiringSecureCoding: true) else { continue }
+
+                let defaultBuilder = DeviceTransferProtoDefault.builder(
+                    key: key,
+                    encodedValue: encodedValue
+                )
+                manifestBuilder.addStandardDefaults(defaultBuilder.buildInfallibly())
+            }
+        }
+
+        // App Defaults
+
+        do {
+            for (key, value) in CurrentAppContext().appUserDefaults().dictionaryRepresentation() {
+                // Filter out any keys we think are managed by Apple, we don't need to transfer them.
+                guard !isAppleKey(key) else { continue }
+
+                guard let encodedValue = try? NSKeyedArchiver.archivedData(withRootObject: value, requiringSecureCoding: true) else { continue }
+
+                let defaultBuilder = DeviceTransferProtoDefault.builder(
+                    key: key,
+                    encodedValue: encodedValue
+                )
+                manifestBuilder.addAppDefaults(defaultBuilder.buildInfallibly())
+            }
+        }
+
+        manifestBuilder.setEstimatedTotalSize(estimatedTotalSize)
+
+        return manifestBuilder.buildInfallibly()
+    }
+
+    func pathRelativeToAppSharedDirectory(_ path: String) throws -> String {
+        guard !path.contains("*") else {
+            throw OWSAssertionError("path contains invalid character: *")
+        }
+
+        let components = path.components(separatedBy: "/")
+
+        guard components.first != "~" else {
+            throw OWSAssertionError("path starts with invalid component: ~")
+        }
+
+        for component in components {
+            guard component != "." else {
+                throw OWSAssertionError("path contains invalid component: .")
+            }
+
+            guard component != ".." else {
+                throw OWSAssertionError("path contains invalid component: ..")
+            }
+        }
+
+        var path = path.replacingOccurrences(of: DeviceTransferService.appSharedDataDirectory.path, with: "")
+        if path.starts(with: "/") { path.removeFirst() }
+        return path
+    }
+
+    func handleReceivedManifest(at localURL: URL, fromPeer peerId: MCPeerID) {
+        guard case .idle = transferState else {
+            stopTransfer()
+            return owsFailDebug("Received manifest in unexpected state \(transferState)")
+        }
+        guard let fileSize = OWSFileSystem.fileSize(of: localURL) else {
+            stopTransfer()
+            return owsFailDebug("Missing manifest file.")
+        }
+        // Not sure why this limit exists in the first place, but 1Gb should be
+        // plenty high for file descriptors.
+        guard fileSize.uint64Value < 1024 * 1024 * 1024 else {
+            stopTransfer()
+            return owsFailDebug("Unexpectedly received a very large manifest \(fileSize)")
+        }
+        guard let data = try? Data(contentsOf: localURL) else {
+            stopTransfer()
+            return owsFailDebug("Failed to read manifest data")
+        }
+        guard let manifest = try? DeviceTransferProtoManifest(serializedData: data) else {
+            stopTransfer()
+            return owsFailDebug("Failed to parse manifest proto")
+        }
+        guard !DependenciesBridge.shared.tsAccountManager.registrationStateWithMaybeSneakyTransaction.isRegistered else {
+            stopTransfer()
+            return owsFailDebug("Ignoring incoming transfer to a registered device")
+        }
+
+        resetTransferDirectory(createNewTransferDirectory: true)
+
+        do {
+            try OWSFileSystem.moveFilePath(
+                localURL.path,
+                toFilePath: URL(
+                    fileURLWithPath: DeviceTransferService.manifestIdentifier,
+                    relativeTo: DeviceTransferService.pendingTransferDirectory
+                ).path
+            )
+        } catch {
+            owsFailDebug("Failed to move manifest into place: \(error.shortDescription)")
+            return
+        }
+
+        let progress = Progress(totalUnitCount: Int64(manifest.estimatedTotalSize))
+
+        transferState = .incoming(
+            oldDevicePeerId: peerId,
+            manifest: manifest,
+            receivedFileIds: [DeviceTransferService.manifestIdentifier],
+            skippedFileIds: [],
+            progress: progress
+        )
+
+        DependenciesBridge.shared.db.write { tx in
+            DependenciesBridge.shared.registrationStateChangeManager.setIsTransferInProgress(tx: tx)
+        }
+
+        notifyObservers { $0.deviceTransferServiceDidStartTransfer(progress: progress) }
+
+        startThroughputCalculation()
+
+        // Check if the device has a newer version of the database than we understand
+
+        guard manifest.grdbSchemaVersion <= GRDBSchemaMigrator.grdbSchemaVersionLatest else {
+            return self.failTransfer(.unsupportedVersion, "Ignoring manifest with unsupported schema version")
+        }
+
+        // Check if there is enough space on disk to receive the transfer
+
+        guard let freeSpaceInBytes = try? OWSFileSystem.freeSpaceInBytes(
+            forPath: DeviceTransferService.pendingTransferDirectory
+        ) else {
+            return self.failTransfer(.assertion, "failed to calculate available disk space")
+        }
+
+        guard freeSpaceInBytes > manifest.estimatedTotalSize else {
+            return self.failTransfer(.notEnoughSpace, "not enough free space to receive transfer")
+        }
+    }
+
+    func sendManifest() throws -> Promise<Void> {
+        Logger.info("Sending manifest to new device.")
+
+        guard case .outgoing(let newDevicePeerId, _, let manifest, _, _) = transferState else {
+            throw OWSAssertionError("attempted to send manifest while no active outgoing transfer")
+        }
+
+        guard let session = session else {
+            throw OWSAssertionError("attempted to send manifest without an available session")
+        }
+
+        resetTransferDirectory(createNewTransferDirectory: true)
+
+        // We write the manifest to a temp file, since MCSession only allows sending "typed"
+        // data when sending files, unless you do your own stream management.
+        let manifestData = try manifest.serializedData()
+        let manifestFileURL = URL(
+            fileURLWithPath: DeviceTransferService.manifestIdentifier,
+            relativeTo: DeviceTransferService.pendingTransferDirectory
+        )
+        try manifestData.write(to: manifestFileURL, options: .atomic)
+
+        let (promise, future) = Promise<Void>.pending()
+
+        session.sendResource(at: manifestFileURL, withName: DeviceTransferService.manifestIdentifier, toPeer: newDevicePeerId) { error in
+            if let error = error {
+                future.reject(error)
+            } else {
+                future.resolve()
+
+                Logger.info("Successfully sent manifest to new device.")
+
+                self.transferState = self.transferState.appendingFileId(DeviceTransferService.manifestIdentifier)
+                self.startThroughputCalculation()
+            }
+
+            OWSFileSystem.deleteFileIfExists(manifestFileURL.path)
+        }
+
+        return promise
+    }
+
+    func readManifestFromTransferDirectory() -> DeviceTransferProtoManifest? {
+        let manifestPath = URL(
+            fileURLWithPath: DeviceTransferService.manifestIdentifier,
+            relativeTo: DeviceTransferService.pendingTransferDirectory
+        ).path
+        guard OWSFileSystem.fileOrFolderExists(atPath: manifestPath) else { return nil }
+        guard let manifestData = try? Data(contentsOf: URL(fileURLWithPath: manifestPath)) else { return nil }
+        return try? DeviceTransferProtoManifest(serializedData: manifestData)
+    }
+}

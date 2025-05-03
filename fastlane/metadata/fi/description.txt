@@ -1,0 +1,19 @@
+Signal on viestisovellus, joka keskittyy yksityisyyteen. Se on ilmainen ja helppokäyttöinen sovellus, jonka vahva päästä päähän -salaus pitää viestintäsi täysin yksityisenä.
+
+• Lähetä tekstiä, ääniviestejä, kuvia, videoita, GIF-tiedostoja ja muita tiedostoja ilmaiseksi. Signal käyttää puhelimesi verkkoyhteyttä, joten vältät tekstiviesti- ja multimediamaksut.
+
+• Soita ystävillesi kristallinkirkkaita, salattuja ääni- ja videopuheluita. Sovellus tukee jopa 40 henkilön ryhmäpuheluita.
+
+• Pidä yhteyttä osallistumalla jopa 1 000 henkilön ryhmäkeskusteluihin. Hallinnoi julkaisuoikeuksia ja ryhmän jäsenyyksiä järjestelmänvalvojan käyttöoikeuksien asetuksilla.
+
+• Jaa kuva-, teksti- ja videotarinoita, jotka katoavat 24 tunnin kuluttua. Voit määrittää jokaisen tarinan katseluoikeudet yksityisyysasetusten avulla.
+
+• Signal on luotu yksityisyyttäsi varten. Emme tiedä mitään sinusta tai keskustelukumppaneistasi. Avoimen lähdekoodin Signal-protokolla varmistaa, että me emme voi lukea viestejäsi tai kuunnella puheluitasi. Eikä voi kukaan muukaan. Ei takaportteja, ei tiedonkeruuta, ei kompromisseja. 
+
+• Signal on riippumaton ja voittoa tavoittelematon taho, joka tarjoaa erilaista teknologiaa erilaiselta organisaatiolta. Voittoa tavoittelemattomana, 501c3-luokiteltuna organisaationa toimintaamme tuetaan käyttäjien lahjoituksilla – emme saa tukea mainostajilta tai sijoittajilta. 
+
+• Tukea, ohjeita ja lisätietoja on saatavilla osoitteessa https://support.signal.org/
+
+Jos haluat tietoja lähdekoodistamme, siirry osoitteeseen https://github.com/signalapp 
+
+Seuraa meitä Twitterissä @signalapp ja Instagramissa @signal_app

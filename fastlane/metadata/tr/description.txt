@@ -1,0 +1,19 @@
+Signal, gizlilik odaklı bir mesajlaşma uygulamasıdır. İletişimi tamamen gizli tutan güçlü uçtan uca şifreleme ile ücretsiz ve kullanımı kolaydır.
+
+• Metinleri, sesli mesajları, fotoğrafları, videoları, GIF'leri ve dosyaları ücretsiz olarak gönderebilirsin. Signal, telefonunun veri bağlantısını kullanır böylece SMS ve MMS ücretlerinden kurtulursun.
+
+• Son derece net bir şekilde şifrelenmiş sesli ve görüntülü aramalarla arkadaşlarını arayabilirsin. Signal 40 kişiye kadar olan grup görüşmeleriyle destekliyor.
+
+• 1.000 kişiye kadar grup sohbetleriyle her zaman bağlantıda kal. Yönetici izin ayarları ile kimlerin paylaşım yapabileceğini ve grup üyelerini yönetebileceğini kontrol et.
+
+• 24 saat sonra kaybolan resim, metin ve video Hikayeleri paylaş. Gizlilik ayarları, her bir Hikayeyi tam olarak kimlerin görebileceğini kontrol etmeni sağlar.
+
+• Signal, gizliliğin için tasarlandı. Senin hakkında veya kimlerle konuştuğun hakkında hiçbir şey bilmiyoruz. Açık kaynak Signal Protokolümüz, mesajlarını okuyamayacağımız veya aramalarını dinleyemeyeceğimiz anlamına gelir. Buna başkaları da dahil. Gizli giriş yok, veri toplama yok, taviz yok. 
+
+• Signal bağımsızdır ve kâr amacı gütmez, yani bildiğinden farklı türde bir kuruluştan farklı türde bir teknoloji sunar. 501c3 kapsamında kâr amacı gütmeyen bir kuruluş olarak reklamcılar veya yatırımcılar tarafından değil, senin gibi kişilerin bağışlarıyla destekleniyoruz. 
+
+• Destek, sorular veya daha fazla bilgi için lütfen https://support.signal.org/ adresini ziyaret et.
+
+Kaynak kodumuzu kontrol etmek için https://github.com/signalapp adresini ziyaret et. 
+
+Bizi Twitter'daki @signalapp ve Instagram'daki @signal_app hesaplarından takip edebilirsin

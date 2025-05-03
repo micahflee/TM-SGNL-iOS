@@ -1,0 +1,42 @@
+# Exclude user build config files
+Config/User*.xcconfig
+
+# Exclude the build directory
+build/*
+# Exclude temp nibs and swap files
+*~.nib
+*.swp
+
+# Exclude OS X folder attributes
+.DS_Store
+
+# Exclude user-specific XCode 3 and 4 files
+xcuserdata
+*.xccheckout
+
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+Index/
+
+# Python
+*.pyc
+*.sdsjson
+Scripts/sds_codegen/sds-includes/*
+
+/.idea
+/.vscode
+
+fastlane/Preview.html

@@ -1,0 +1,20 @@
+//
+// Copyright 2014 Signal Messenger, LLC
+// SPDX-License-Identifier: AGPL-3.0-only
+//
+
+// iOS - since we use a modern proto-compiler, we must specify
+// the legacy proto format.
+syntax = "proto2";
+
+// iOS - package name determines class prefix
+package IOSProtos;
+
+message DeviceName {
+  // @required
+  optional bytes ephemeralPublic = 1;
+  // @required
+  optional bytes syntheticIv = 2;
+  // @required
+  optional bytes ciphertext = 3;
+}

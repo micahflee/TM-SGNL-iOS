@@ -1,0 +1,51 @@
+//
+// Copyright 2014 Signal Messenger, LLC
+// SPDX-License-Identifier: AGPL-3.0-only
+//
+
+// iOS - since we use a modern proto-compiler, we must specify
+// the legacy proto format.
+syntax = "proto2";
+
+package ProvisioningProtos;
+
+option java_package = "org.whispersystems.signalservice.internal.push";
+option java_outer_classname = "ProvisioningProtos";
+
+message ProvisioningUuid {
+    // @required
+    optional string uuid = 1;
+}
+
+message ProvisionEnvelope {
+  // @required
+  optional bytes publicKey = 1;
+  // @required
+  optional bytes body = 2; // Encrypted ProvisionMessage
+}
+
+message ProvisionMessage {
+  // @required
+  optional bytes aciIdentityKeyPublic = 1;
+  // @required
+  optional bytes aciIdentityKeyPrivate = 2;
+  // @required
+  optional bytes pniIdentityKeyPublic = 11;
+  // @required
+  optional bytes pniIdentityKeyPrivate = 12;
+  optional string aci = 8;
+  optional string pni = 10;
+  optional string number = 3;
+  // @required
+  optional string provisioningCode = 4;
+  optional string userAgent = 5;
+  // @required
+  optional bytes profileKey = 6;
+  optional bool readReceipts = 7;
+  optional uint32 provisioningVersion = 9;
+  optional bytes masterKey = 13;
+  optional bytes ephemeralBackupKey = 14; // 32 bytes
+  reserved /*accountEntropyPool*/ 15;
+  optional bytes mediaRootBackupKey = 16;
+  // NEXT ID: 17
+}

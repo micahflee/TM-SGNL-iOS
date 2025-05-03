@@ -1,0 +1,141 @@
+{
+	"nsnumber_types": {
+		"TSThread.archivedAsOfMessageSortId": "UInt64",
+		"TSIncomingMessage.serverTimestamp": "UInt64",
+		"TSIncomingMessage.deprecated_sourceDeviceId": "UInt32",
+		"TSOutgoingMessageRecipientState.deliveryTimestamp": "UInt64",
+		"TSOutgoingMessageRecipientState.readTimestamp": "UInt64",
+		"OWSBackupFragment.uncompressedDataLength": "UInt64",
+		"SSKJobRecord.exclusiveProcessIdentifier": "Int32",
+		"TSMessage.storyTimestamp": "UInt64",
+		"TSThread.editTargetTimestamp": "UInt64",
+		"TSThread.lastSentStoryTimestamp": "UInt64",
+		"TSThread.lastViewedStoryTimestamp": "UInt64",
+		"TSThread.lastReceivedStoryTimestamp": "UInt64",
+                "TSMessage.expireTimerVersion": "UInt32"
+	},
+	"properties_to_ignore": [
+		"TSYapDatabaseObject.grdbId",
+		"OWSDynamicOutgoingMessage.block",
+		"OWSDisappearingMessagesConfiguration.originalDictionaryValue",
+		"OWSDisappearingMessagesConfiguration.newRecord",
+		"TSThread.isArchivedByLegacyTimestampForSorting",
+		"TSContactThread.contactThreadSchemaVersion",
+		"TSCall.callSchemaVersion",
+		"TSErrorMessage.errorMessageSchemaVersion",
+		"TSMessage.schemaVersion",
+		"TSIncomingMessage.incomingMessageSchemaVersion",
+		"TSInfoMessage.infoMessageSchemaVersion",
+		"TSOutgoingMessage.outgoingMessageSchemaVersion",
+		"OWSUnknownProtocolVersionMessage.unknownProtocolVersionMessageSchemaVersion",
+		"OWSRecipientIdentity.recipientIdentitySchemaVersion",
+		"TSRecipientReadReceipt.recipientReadReceiptSchemaVersion",
+		"OWSLinkedDeviceReadReceipt.linkedDeviceReadReceiptSchemaVersion",
+		"TSOutgoingMessage.changeActionsProtoData"
+	],
+	"class_cache_get_code": {
+		"InstalledSticker": "SSKEnvironment.shared.modelReadCachesRef.installedStickerCache.getInstalledSticker(uniqueId: uniqueId, transaction: transaction)",
+		"TSThread": "SSKEnvironment.shared.modelReadCachesRef.threadReadCache.getThread(uniqueId: uniqueId, transaction: transaction)",
+		"TSInteraction": "SSKEnvironment.shared.modelReadCachesRef.interactionReadCache.getInteraction(uniqueId: uniqueId, transaction: transaction)"
+	},
+	"class_cache_set_code": {
+		"InstalledSticker": "SSKEnvironment.shared.modelReadCachesRef.installedStickerCache.didReadInstalledSticker",
+		"TSThread": "SSKEnvironment.shared.modelReadCachesRef.threadReadCache.didReadThread",
+		"TSInteraction": "SSKEnvironment.shared.modelReadCachesRef.interactionReadCache.didReadInteraction"
+	},
+	"class_to_skip_serialization": [
+		"OWSContactOffersInteraction",
+		"OWSOutgoingSyncMessage",
+		"OWSOutgoingReactionMessage",
+		"OWSEndSessionMessage",
+		"OWSStaticOutgoingMessage",
+		"OWSDynamicOutgoingMessage",
+		"OWSDisappearingMessagesConfigurationMessage",
+		"OWSGroupInfoRequestMessage",
+		"OWSProfileKeyMessage",
+		"OWSOutgoingNullMessage",
+		"OWSOutgoingCallMessage",
+		"OWSOutgoingGroupCallMessage",
+		"OWSOutgoingSenderKeyDistributionMessage",
+		"OWSOutgoingResendRequest",
+		"OWSReceiptsForSenderMessage",
+		"OWSUnknownDBObject",
+		"TSOutgoingDeleteMessage",
+		"OWSOutgoingResendResponse"
+	],
+	"manually_typed_fields": {
+		"TSThread.conversationColorName": {
+			"swift_type": "ConversationColorName",
+			"objc_initializer_type": "ConversationColorName",
+			"is_objc_codable": true,
+			"is_enum": true,
+			"column_type": ".unicodeString",
+			"record_swift_type": "String",
+			"serialize_record_invocation": "%s.rawValue",
+			"should_use_blob": false
+		},
+		"TSInfoMessage.infoMessageUserInfo": {
+			"swift_type": "[InfoMessageUserInfoKey: AnyObject]",
+			"objc_initializer_type": "NSDictionary<InfoMessageUserInfoKey, id> *",
+			"is_objc_codable": false,
+			"is_enum": false,
+			"column_type": ".blob",
+			"record_swift_type": "Data",
+			"serialize_record_invocation": "optionalArchive(%s)",
+			"should_use_blob": true
+		},
+		"TSThread.mentionNotificationMode": {
+			"swift_type": "TSThreadMentionNotificationMode",
+			"objc_initializer_type": "TSThreadMentionNotificationMode",
+			"is_objc_codable": true,
+			"is_enum": true,
+			"column_type": ".int",
+			"record_swift_type": "UInt",
+			"serialize_record_invocation": "%s.rawValue",
+			"should_use_blob": false
+		},
+		"TSThread.storyViewMode": {
+			"swift_type": "TSThreadStoryViewMode",
+			"objc_initializer_type": "TSThreadStoryViewMode",
+			"is_objc_codable": true,
+			"is_enum": true,
+			"column_type": ".int",
+			"record_swift_type": "UInt",
+			"serialize_record_invocation": "%s.rawValue",
+			"should_use_blob": false
+		}
+	},
+	"custom_accessors": {
+		"TSInfoMessage.read": "wasRead",
+		"TSErrorMessage.read": "wasRead",
+		"TSIncomingMessage.read": "wasRead",
+		"TSCall.read": "wasRead",
+		"OWSGroupCallMessage.read": "wasRead",
+		"TSIncomingMessage.viewed": "wasViewed",
+		"OWSDisappearingMessagesConfiguration.enabled": "isEnabled",
+		"OWSDisappearingMessagesConfiguration.newRecord": "isNewRecord"
+	},
+	"custom_column_names": {
+		"TSInteraction.uniqueThreadId": "threadUniqueId",
+		"TSThread.lastVisibleSortIdObsolete": "lastVisibleSortId",
+		"TSThread.lastVisibleSortIdOnScreenPercentageObsolete": "lastVisibleSortIdOnScreenPercentage",
+		"TSThread.mutedUntilDateObsolete": "mutedUntilDate",
+		"TSThread.isArchivedObsolete": "isArchived",
+		"TSThread.isMarkedUnreadObsolete": "isMarkedUnread",
+		"TSThread.mutedUntilTimestampObsolete": "mutedUntilTimestamp",
+		"TSThread.conversationColorNameObsolete": "conversationColorName"
+	},
+	"aliased_column_names": {
+		"TSInteraction.sortId": "id",
+		"SSKJobRecord.sortId": "id"
+	},
+	"renamed_column_names": {
+		"TSThread.lastVisibleSortIdObsolete": "lastVisibleSortId",
+		"TSThread.lastVisibleSortIdOnScreenPercentageObsolete": "lastVisibleSortIdOnScreenPercentage",
+		"TSThread.mutedUntilDateObsolete": "mutedUntilDate",
+		"TSThread.isArchivedObsolete": "isArchived",
+		"TSThread.isMarkedUnreadObsolete": "isMarkedUnread",
+		"TSThread.mutedUntilTimestampObsolete": "mutedUntilTimestamp",
+		"TSThread.conversationColorNameObsolete": "conversationColorName"
+	}
+}

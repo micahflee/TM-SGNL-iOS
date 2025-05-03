@@ -1,0 +1,19 @@
+Signal è un'app di messaggistica dove la privacy è alla base di tutto. Semplice, gratis e con crittografia end-to-end, Signal garantisce la privacy e la sicurezza di tutte le comunicazioni dei suoi utenti.
+
+• Invia messaggi scritti, vocali, foto, video, GIF, file e molto altro senza costi di alcun tipo. Signal usa la connessione dati del tuo telefono, così potrai evitare costi associati a SMS e MMS.
+
+• Parla con chi vuoi grazie a chiamate audio e video di qualità, tutte crittografate. Le chiamate di gruppo supportano fino a 40 persone!
+
+• Parla con più persone contemporaneamente: i gruppi supportano fino a 1000 persone. Gestisci le persone che fanno parte del gruppo, scegli chi può interagire e come tramite le Impostazioni da admin.
+
+• Condividi foto, testi e video usando le Storie che scompaiono dopo 24 ore. Grazie alle Impostazioni per la privacy puoi scegliere a chi far vedere le tue Storie.
+
+• Signal è progettato per tutelare i tuoi dati. Non sapremo mai nulla di te né delle persone con cui parli. Il nostro protocollo Open Source garantisce la privacy dei tuoi messaggi e delle tue chiamate. Né noi di Signal, né persone esterne avranno mai accesso a questi contenuti. Nessuna raccolta dati, né backdoor o compromesso sulla tua privacy. 
+
+• Signal è un'organizzazione non-profit indipendente che ha sviluppato una tecnologia unica nel suo genere. Essendo una non-profit di tipo 501c3, siamo supportati dalle donazioni dei nostri utenti, non da investitori o inserzionisti pubblicitari. 
+
+• Per assistenza, domande o maggiori informazioni, puoi consultare il nostro sito qui: https://support.signal.org/
+
+Per consultare il nostro codice sorgente, puoi visitare la seguente pagina: https://github.com/signalapp 
+
+Seguici su Twitter (@signalapp) e Instagram (@signal_app)

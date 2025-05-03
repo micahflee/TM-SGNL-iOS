@@ -1,0 +1,19 @@
+Signal is een berichtenapp waar privacy centraal staat. Het is gratis en gemakkelijk te gebruiken, met sterke end-to-endversleuteling die je communicatie volledig privé houdt.
+
+• Stuur gratis tekst- en spraakberichten, foto's, video's, GIF's en bestanden. Signal maakt gebruik van de internetverbinding van je telefoon, zodat je sms- en mms-kosten kunt vermijden.
+
+• Bel je vrienden met versleutelde spraak- en video-oproepen. Groepsoproepen worden ondersteund tot wel 40 personen.
+
+• Houd contact via groepschats met tot wel 1000 mensen. Bepaal wie kan posten en groepsleden kan beheren met instellingen voor beheerdersmachtigingen.
+
+• Deel beeld-, tekst- en videoverhalen die na 24 uur verdwijnen. Met privacyinstellingen bepaal je precies wie elk verhaal kan zien.
+
+• Signal is gebouwd voor jouw privacy. We weten niets over jou of met wie je praat. Ons opensource Signal Protocol betekent dat we jouw berichten niet kunnen lezen of naar je oproepen kunnen luisteren. En niemand anders kan dat. Geen addertjes onder het gras, geen gegevensverzameling, geen compromissen. 
+
+• Signal is onafhankelijk en heeft geen winstoogmerk. Onze unieke organisatie biedt een ander soort technologie. Als 501c3-non-profitorganisatie worden we ondersteund door jouw donaties, niet door adverteerders of investeerders. 
+
+• Ga voor ondersteuning, vragen of meer informatie naar https://support.signal.org/
+
+Ga naar https://github.com/signalapp om onze broncode te bekijken 
+
+Volg ons op X @signalapp en Instagram @signal_app

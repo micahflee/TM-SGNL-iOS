@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -x
+set -e
+
+BIN_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+REPO_ROOT=$BIN_DIR/../..
+cd $REPO_ROOT
+
+cat <<EOS
+
+Begin Pushing translation source
+################################
+
+EOS
+
+$BIN_DIR/push-translation-source
+$BIN_DIR/push-metadata-source
+
+cat <<EOS
+
+Done Pushing translation source
+###############################
+Begin Pulling translations
+
+EOS
+
+$BIN_DIR/pull-metadata-translations
+$BIN_DIR/pull-translations
+
+cat <<EOS
+
+Done Pulling translations
+#########################
+
+EOS
+
+

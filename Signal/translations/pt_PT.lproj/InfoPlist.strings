@@ -1,0 +1,9 @@
+NSAppleMusicUsageDescription = "O Signal necessita de utilizar a aplicação Apple Music para reproduzir anexos multimédia.";
+NSCameraUsageDescription = "O Signal utiliza a sua câmara para tirar fotografias e fazer vídeochamadas.";
+NSContactsUsageDescription = "O Signal acede aos seus contactos para encontrar utilizadores que você conhece. Não armazenamos os seus contactos no servidor.";
+NSFaceIDUsageDescription = "O bloqueio de ecrã do Signal utiliza o Face ID.";
+NSLocationWhenInUseUsageDescription = "O Signal necessita de aceder à sua localização para poder partilhar a sua localização atual.";
+NSMicrophoneUsageDescription = "O Signal necessita de ter acesso ao seu microfone para fazer e receber chamadas telefónicas e gravar mensagens de voz.";
+NSPhotoLibraryAddUsageDescription = "O Signal guardará fotografias na sua biblioteca.";
+NSPhotoLibraryUsageDescription = "O Signal permitirá que escolha quais as fotografias da sua biblioteca a enviar.";
+NSLocalNetworkUsageDescription = "O Signal utiliza a rede local para lhe permitir que transfira diretamente a sua conta para um telemóvel novo. Não será possível utilizar até que você escolha explicitamente.";

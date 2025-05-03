@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+set -e
+
+BIN_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+REPO_ROOT=$BIN_DIR/../..
+cd "$REPO_ROOT"
+
+SSK_DIR="SignalServiceKit"
+SAE_DIR="SignalShareExtension"
+SUI_DIR="SignalUI"
+NSE_DIR="SignalNSE"
+
+TARGETS=(Signal "${SSK_DIR}" "${SAE_DIR}" "${NSE_DIR}" "${SUI_DIR}")
+TMP="$(mktemp -d)"
+STRINGFILE="Signal/translations/en.lproj/Localizable.strings"
+
+# Assert preconditions before we do any work
+# We're more likely to notice errors this way
+
+for TARGET_DIR in "${TARGETS[@]}"; do
+	if [[ ! -d "$TARGET_DIR" ]]; then
+		echo "Unable to find required directory: ${TARGET_DIR}."
+		exit 1
+	fi
+done
+
+# Now that we've check all our pre-conditions, proceed with the work.
+
+# Search directories for .m & .h files and collect string definitions with genstrings.
+# Exclude the files that define OWSLocalizedString for Swift and ObjC, though.
+find "${TARGETS[@]}" \
+	'(' \
+		-name 'test' -o \
+		-name 'tests' -o \
+		-name 'OWSLocalizedString.swift' -o \
+		-name 'SignalServiceKit.h' \
+	')' \
+	-prune \
+	-o \
+	'(' \
+		-name "*.m" -or \
+		-name "*.h" -or \
+		-name "*.swift" \
+	')' \
+	-exec genstrings -s OWSLocalizedString -o "$TMP" "{}" "+"
+
+# We have to convert the new .strings files to UTF-8 in order to deal with them
+# STRINGFILE is already UTF-8.
+OLDUTF8=$(cat $STRINGFILE)
+NEWUTF8=$(iconv -f UTF-16 -t UTF-8 "$TMP"/Localizable.strings)
+
+# Let's merge the old with the new .strings file:
+#	1. Select old string definition lines
+#	2. Setup field separators
+#	3. Read old string definitions as associative array
+#	4. In new file, if possible, insert old definition
+#	5. Add separator and semicolon only for string definition lines
+echo "$OLDUTF8" | grep -Eo '^".*"' | \
+	awk 'BEGIN {FS = "\" = \""; OFS = ""}
+		NR == FNR {a[$1] = $2; next}
+		{$2 = ($1 in a ? a[$1] : $2);
+		if($2 ~ /"[;]*$/){$2 = "\" = \""$2};
+		if($2 ~ /"$/){$2 = $2";"};
+		print}' - <(echo "$NEWUTF8") > $STRINGFILE
+
+swift run --package-path Scripts/translation-tool translation-tool genstrings-pluralaware "$TMP"

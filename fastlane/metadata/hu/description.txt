@@ -1,0 +1,19 @@
+A Signal egy olyan üzenetküldő alkalmazás, amelynek középpontjában az adatvédelem áll. Ingyenes és könnyen használható, erős végpontok közötti titkosítással, amely gondoskodik róla, hogy a kommunikáció teljesen privát legyen.
+
+• Ingyenesen küldhetsz szöveges üzeneteket, hangüzeneteket, fotókat, videókat, GIF-eket és fájlokat. A Signal a telefon adatkapcsolatát használja, így elkerülheted az SMS- és MMS-díjakat.
+
+• Hívd barátaidat kristálytiszta, titkosított hang- és videohívásokkal. Csoportos hívások, akár 40 főig.
+
+• Kapcsolódj akár 1000 fős csoportos csevegésekkel. Adminisztrátori jogosultságokkal szabályozhatod, hogy kik posztolhatnak és kezelhetik a csoporttagokat.
+
+• Ossz meg a képeket, szöveges üzeneteket és videós Történeteket, amelyek 24 óra elteltével eltűnnek. Az adatvédelmi beállításoknak hála te határozhatod meg, hogy pontosan ki láthatja az egyes Történeteket.
+
+• A Signal az adataid védelmére épült. Semmit sem tudunk rólad, vagy arról, hogy kivel beszélsz. Nyílt forráskódú Signal Protokolllunk azt jelenti, hogy nem tudjuk elolvasni az üzeneteid, és nem tudjuk meghallgatni a hívásaidat. Más sem tudja. Nincsenek kiskapuk, nincs adatgyűjtés, nincsenek kompromisszumok. 
+
+• A Signal független és nem a nyereség a célja; másfajta technológia egy másfajta szervezettől. 501c3-mas nonprofit szervezetként az adományaid, nem pedig a hirdetők vagy a befektetők támogatnak minket. 
+
+• Támogatásért, kérdésekkel vagy további információért látogass el a https://support.signal.org/ oldalra.
+
+Forráskódunk megtekintéséhez látogass el a https://github.com/signalapp oldalra 
+
+Kövess minket Twitteren (@signalapp) és Instagramon (@signal_app)

@@ -1,0 +1,19 @@
+Signal je aplikace pro zasílání zpráv, která dbá na vaše soukromí. Je bezplatná, snadno se používá a má silné koncové šifrování, díky kterému je vaše komunikace naprosto soukromá.
+
+• Posílejte textové a hlasové zprávy, fotografie, videa, GIFy i soubory zdarma. Signal využívá datové připojení vašeho telefonu, takže se vyhnete poplatkům za SMS a MMS.
+
+• Zavolejte svým přátelům a užívejte si šifrované hlasové hovory a videohovory s krásným zvukem. Podpora skupinových hovorů až pro 40 osob.
+
+• Zůstaňte ve spojení díky skupinovým chatům až pro 1 000 lidí. Kontrolujte, kdo může posílat příspěvky, a spravujte členy skupiny pomocí nastavení s oprávněním správce.
+
+• Sdílejte obrázkové, textové a video Příběhy, které po 24 hodinách zmizí. Nastavení soukromí vám umožní přesně určit, kdo může jednotlivé Příběhy vidět.
+
+• Služba Signal je vytvořena s ohledem na vaše soukromí. Nevíme nic o vás ani o tom, s kým mluvíte. Náš otevřený protokol Signal znamená, že nemůžeme číst vaše zprávy ani poslouchat vaše hovory. A nemůže je číst a poslouchat ani nikdo jiný. Nemáme žádná zadní vrátka, neshromažďujeme žádné údaje ani se neuchylujeme ke kompromisům. 
+
+• Signal je nezávislá a nezisková společnost. Tak trochu jiná technologie od tak trochu jiné organizace. Jako nezisková organizace dle 501c3 jsme podporováni vašimi příspěvky, nikoli inzerenty nebo investory. 
+
+• Podporu, odpovědi na vaše otázky a další informace najdete na adrese: https://support.signal.org/
+
+Pokud se chcete podívat na náš zdrojový kód, navštivte https://github.com/signalapp 
+
+Sledujte nás na Twitteru @signalapp a Instagramu @signal_app

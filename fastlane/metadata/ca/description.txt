@@ -1,0 +1,19 @@
+• Signal és una aplicació de missatgeria centrada en la privacitat. És gratuïta i fàcil d'utilitzar, amb un fort xifratge d'extrem a extrem que manté la teva comunicació completament privada.
+
+• Envia de manera gratuïta missatges, notes de veu, fotos, vídeos, GIFs i arxius. Signal utilitza la connexió de dades del telèfon, així pots evitar les tarifes d'SMS i MMS.
+
+• Truca als teus amics amb trucades de veu i videotrucades encriptades i nítides. S'admeten trucades en grup per a un màxim de 40 persones.
+
+• No perdis mai el contacte amb xats grupals de fins a 1.000 persones. Controla qui pot publicar i gestionar els membres del grup amb la configuració de permisos d'administrador.
+
+• Comparteix Històries d'imatge, text i vídeo que desapareixeran automàticament al cap de 24 hores. La configuració de privacitat et manté a càrrec de qui pot veure exactament cada història.
+
+• Signal està dissenyada per a la teva privacitat. No sabem res de tu ni amb qui estàs parlant. El nostre protocol de codi obert de Signal significa que no podem llegir els teus missatges ni escoltar les teves trucades. Ni tampoc pot fer-ho ningú més. Sense portes posteriors, sense recollida de dades, sense compromisos. 
+
+• Signal és independent i sense ànim de lucre; un tipus de tecnologia diferent d'un tipus d'organització diferent. Com a entitat sense ànim de lucre 501c3, comptem amb el suport de les teves donacions, no d'anunciants o inversors. 
+
+• Si necessites assistència, tens alguna pregunta o vols saber-ne més, visita https://support.signal.org/
+
+Per consultar el nostre codi font, visita https://github.com/signalapp 
+
+Segueix-nos a Twitter @signalapp i Instagram @signal_app
